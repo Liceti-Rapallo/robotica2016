@@ -1,0 +1,44 @@
+L'input avviene su seriale, i comandi hanno la forma di tre caratteri uno in fila all'altro [char][char][char]
+Il primo carattere determina il comando, il secondo la sua declinazione, il terzo passa parametri al comando
+
+# Comandi disponibili #
+C		ChangeMode		Cambio di modalità
+	A		Autonomous		Il robot agirà autonomamente
+	D		Drone			Il robot attende comandi dall'esterno
+	I		Idle			Il robot non compirà alcuna azione
+
+F		Follow			Indica al robot di seguire/cercare di individuare
+	S		Sounds			Il robot si dirigerà verso la più forte sorgente di rumore
+	I		Images			Il robot cercherà con la videocamera le immagini precaricate
+
+M		Move			Movimento [SE IN MODALITA' DRONE]
+	Muove il robot per 1 secondo o per [char3 1-9] secondi
+	F		Forward			Azionamento entrambi i cingoli
+	B		Backwards		Azionamento entrambi i cingoli in direzione contraria
+	L		Left			Azionamento cingolo destro
+	R		Right			Azionamento cingolo sinistro
+
+P		PrecisionMovement
+	come [Move] ma attende in [char3] un valore 0-9 per effettuare rotazioni precise
+		0	rotazione 5 gradi
+		1	rotazione 10 gradi
+		2	rotazione 20 gradi
+		3	rotazione 30 gradi
+		4	rotazione 40 gradi
+		5	rotazione 50 gradi
+		6	rotazione 60 gradi
+		7	rotazione 70 gradi
+		8	rotazione 80 gradi
+		9	rotazione 90 gradi
+	L		Left			Azionamento cingolo destro
+	R		Right			Azionamento cingolo sinistro	
+
+T		Toggle
+	Avvia o interrompe il movimento in una direzione
+	F		Forward			Azionamento entrambi i cingoli
+	B		Backwards		Azionamento entrambi i cingoli in direzione contraria
+	L		Left			Azionamento cingolo destro
+		S		Soft		Azionamento cingolo destro e azionamento parziale cingolo sinistro
+	R		Right			Azionamento cingolo sinistro
+		S		Soft		Azionamento cingolo sinistro e azionamento parziale cingolo destro
+	S		Stop			Interrope ogni comando precedente
