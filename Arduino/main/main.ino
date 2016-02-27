@@ -5,6 +5,7 @@
 //HEADERS
 #include "_cfg.h"
 #include "hc-sr04.h"
+#include "SHARP_2Y0A21F2Y.h"
 //FINE HEADERS
 
 //GLOBALI
@@ -19,7 +20,7 @@ char robotMode = 'A';
 void setup()
 {
   Serial.begin(SerialRate); 
-  prepareHC_SR04();					//prepara sensore HC-SR04
+  //prepareHC_SR04();					//prepara sensore HC-SR04
 }
 
 void loop()
@@ -37,11 +38,12 @@ void loop()
 			//Modalità idle
 			break;
 	}
-	delay(50);
+	delay(100);
 }
 
 void goAuto(){
-  Serial.println(getHC_SR04Measure_smooth());         // TEST HC-SR04
+  //Serial.println(getHC_SR04Measure_smooth());         // TEST HC-SR04
+  Serial.println(getSHARP2Y0A21F2Ymeasure_smooth());
 }
 
 void goDrone(){
