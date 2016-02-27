@@ -3,6 +3,8 @@
   Utilizzo:
     Includere con:
       #include "SHARP_2Y0A21F2Y"
+    Richiamare quando si desidera una misurazione getSHARP2Y0A21F2Ymeasure()
+    Richiamare quando si desidera una misurazione mediata getSHARP2Y0A21F2Ymeasure_smooth()
 */
 int getSHARP2Y0A21F2Ymeasure(){
   //Ottiene una misurazione

@@ -16,3 +16,8 @@
 #define IR_MaxRange 40        //Numero di centimetri sopra al quale verrà ritornato il valore di default                                                            [MIN: 20| MAX: 80 | DEFAULT: 40]
 #define IR_MinRange 8         //Numero di centimetri sotto ai quali verrà ritornato il valore di default                                                            [MIN: 5 | MAX: 20 | DEFAULT:  8]
 
+// Termistore TDC 310
+#define THRM_pin 2            //Pin analogico sul quale è montato il termistore
+
+// Fotoresistenza
+#define LHT_pin 4             //Pin analogico sul quale è montata la fotoresistenza
