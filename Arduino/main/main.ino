@@ -6,6 +6,7 @@
 #include "_cfg.h"
 #include "hc-sr04.h"
 #include "SHARP_2Y0A21F2Y.h"
+#include "TDC310.h"
 //FINE HEADERS
 
 //GLOBALI
@@ -43,7 +44,8 @@ void loop()
 
 void goAuto(){
   //Serial.println(getHC_SR04Measure_smooth());         // TEST HC-SR04
-  Serial.println(getSHARP2Y0A21F2Ymeasure_smooth());
+  //Serial.println(getSHARP2Y0A21F2Ymeasure_smooth());    // TEST SHARP
+  Serial.println(getTDC310temp());
 }
 
 void goDrone(){
