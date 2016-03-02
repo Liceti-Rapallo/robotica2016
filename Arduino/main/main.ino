@@ -114,6 +114,10 @@ void moveForX(char movDirection, char movDuration) {
   Serial.println("Movimento terminato");
 }
 
+void rotateForX(char rotDirection, char howMuch){
+  
+}
+
 void advanceLeft(){}  //Azionamento cingolo sx
 void advanceRight(){} //Azionamento cingolo dx
 void advanceBoth(){}  //Azionamento sincronizzato cingoli sx+dx
@@ -147,6 +151,7 @@ void serialEvent(){
         moveForX(serialStream[1], serialStream[2]);
         break;
       case 'P':
+        rotateForX(serialStream[1], serialStream[2]);
         break;
       case 'T':
         break;

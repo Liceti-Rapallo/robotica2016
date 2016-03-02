@@ -10,6 +10,7 @@ C		ChangeMode		Cambio di modalità
 F		Follow			Indica al robot di seguire/cercare di individuare
 	S		Sounds			Il robot si dirigerà verso la più forte sorgente di rumore
 	I		Images			Il robot cercherà con la videocamera le immagini precaricate
+	N		None			Ferma la modalità inseguimento
 
 M		Move			Movimento [SE IN MODALITA' DRONE]
 	Muove il robot per 1 secondo o per [char3 1-9] secondi
