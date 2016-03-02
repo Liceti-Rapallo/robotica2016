@@ -17,7 +17,8 @@ char serialStream[3];
 	D = Drone
 	I = Idle
 */
-char robotMode = 'A';				
+char robotMode = 'A';
+bool continueFollowing = false;   //Indica al ciclo all'interno di follow se proseguire o no
 
 void setup()
 {
@@ -57,7 +58,26 @@ void goDrone(){
 }
 
 void getIdle(){
-  
+  continueFollowing = false;                //Blocca l'eventuale inseguimento
+}
+void follow(char what){
+  while (continueFollowing){
+    if (what=='S') {
+      Serial.println("Seguendo suoni");
+    } else {
+      Serial.println("Seguendo immagini");
+    }
+    if (Serial.available() > 0) {
+      if (Serial.readString()=="FN"){
+        continueFollowing = false;
+        Serial.println("Interrotto inseguimento");
+      } else {
+        Serial.println("Comando non accettato");
+        Serial.println("Provare con FN per interrompere l'inseguimento");
+      }
+    }
+    delay(1000);
+  }
 }
 
 void serialEvent(){
@@ -80,6 +100,8 @@ void serialEvent(){
         robotMode = serialStream[1];
         break;
       case 'F':
+        continueFollowing = true;
+        follow(serialStream[1]);
         break;
       case 'M':
         break;
