@@ -60,6 +60,7 @@ void goDrone(){
 void getIdle(){
   continueFollowing = false;                //Blocca l'eventuale inseguimento
 }
+
 void follow(char what){
   while (continueFollowing){
     if (what=='S') {
@@ -80,6 +81,44 @@ void follow(char what){
   }
 }
 
+void moveForX(char movDirection, char movDuration) {
+  int remainingMov;
+  if (movDuration == NULL){
+    remainingMov = 1;
+  } else {
+    remainingMov = movDuration-48;  //Da tabella ASCII a int (lol)
+  }
+  String msg = "Avvio movimento verso ";
+  switch (movDirection) {
+    case 'F':
+      msg+="avanti ";
+      advanceBoth();
+      break;
+    case 'B':
+      msg+="indietro ";
+      advanceBoth();
+      break;
+    case 'L':
+      msg+="sinistra ";
+      advanceRight();
+      break;
+    case 'R':
+      msg+="destra ";
+      advanceLeft();
+      break;
+  }
+  msg += "per " + String(remainingMov) + " secondi";
+  Serial.println(msg);
+  delay(remainingMov*1000);
+  stopEngines();
+  Serial.println("Movimento terminato");
+}
+
+void advanceLeft(){}  //Azionamento cingolo sx
+void advanceRight(){} //Azionamento cingolo dx
+void advanceBoth(){}  //Azionamento sincronizzato cingoli sx+dx
+void stopEngines(){}  //Stop motori
+
 void serialEvent(){
   //CHIAMATA QUANDO ARDUINO RICEVE DATI SU SERIALE
   if (Serial.available() > 0) {
@@ -94,6 +133,7 @@ void serialEvent(){
     Serial.print(serialStream[1]);
     Serial.print(" carattere 3:");
     Serial.print(serialStream[2]);
+    Serial.println();
     //SWITCH PRIMO CARATTERE
     switch (serialStream[0]) {
       case 'C':
@@ -104,6 +144,7 @@ void serialEvent(){
         follow(serialStream[1]);
         break;
       case 'M':
+        moveForX(serialStream[1], serialStream[2]);
         break;
       case 'P':
         break;
