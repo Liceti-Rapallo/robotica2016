@@ -35,9 +35,11 @@ void loop()
 			break;
 		case 'D':
 			//Modalità drone
+      goDrone();
 			break;
 		case 'I':
 			//Modalità idle
+      getIdle();
 			break;
 	}
 	delay(100);
@@ -47,7 +49,7 @@ void goAuto(){
   //Serial.println(getHC_SR04Measure_smooth());         // TEST HC-SR04
   //Serial.println(getSHARP2Y0A21F2Ymeasure_smooth());    // TEST SHARP
   //Serial.println(getTDC310temp());                    // TEST TDC310
-  Serial.println(getLight()); 
+  //Serial.println(getLight());                         // TEST FOTORESISTENZA
 }
 
 void goDrone(){
@@ -72,5 +74,20 @@ void serialEvent(){
     Serial.print(serialStream[1]);
     Serial.print(" carattere 3:");
     Serial.print(serialStream[2]);
+    //SWITCH PRIMO CARATTERE
+    switch (serialStream[0]) {
+      case 'C':
+        break;
+      case 'F':
+        break;
+      case 'M':
+        break;
+      case 'P':
+        break;
+      case 'T':
+        break;
+    }
   }
 }
+
+
