@@ -77,6 +77,7 @@ void serialEvent(){
     //SWITCH PRIMO CARATTERE
     switch (serialStream[0]) {
       case 'C':
+        robotMode = serialStream[1];
         break;
       case 'F':
         break;
