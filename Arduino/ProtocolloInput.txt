@@ -32,14 +32,4 @@ P		PrecisionMovement
 		8	rotazione 80 gradi
 		9	rotazione 90 gradi
 	L		Left			Azionamento cingolo destro
-	R		Right			Azionamento cingolo sinistro	
-
-T		Toggle
-	Avvia o interrompe il movimento in una direzione
-	F		Forward			Azionamento entrambi i cingoli
-	B		Backwards		Azionamento entrambi i cingoli in direzione contraria
-	L		Left			Azionamento cingolo destro
-		S		Soft		Azionamento cingolo destro e azionamento parziale cingolo sinistro
 	R		Right			Azionamento cingolo sinistro
-		S		Soft		Azionamento cingolo sinistro e azionamento parziale cingolo destro
-	S		Stop			Interrope ogni comando precedente
