@@ -22,7 +22,8 @@ bool continueFollowing = false;   //Indica al ciclo all'interno di follow se pro
 
 void setup()
 {
-  Serial.begin(SerialRate); 
+  Serial.begin(SerialRate);
+  Serial.println("SERIAL: " + String(SerialRate)); 
   //prepareHC_SR04();					//prepara sensore HC-SR04
 }
 
@@ -59,22 +60,36 @@ void goDrone(){
 
 void getIdle(){
   continueFollowing = false;                //Blocca l'eventuale inseguimento
+  stopEngines();
 }
+
+/*
+ * Le funzioni di azionamento cingoli prendono come parametri di input una velocita' target oppure una distanza da percorrere target,
+ * viene passata come array la velocita' obiettivo
+ */
+void advance(float requiredSpeed[2], char type = 'S'){
+  Serial.println("DEBUGM: Richiesta configurazione motori " + String(requiredSpeed[0]) + " " + String(requiredSpeed[1]));
+  if (type == 'S')  { Serial.println("DEBUGM: Modo a velocita' fissata"); } else
+                    { Serial.println("DEBUGM: Modo a distanza fissata"); }
+}  //Azionamento cingoli
+void stopEngines(){
+  Serial.println("DEBUGM: Fermati i motori");
+}  //Stop motori
 
 void follow(char what){
   while (continueFollowing){
-    if (what=='S') {
-      Serial.println("Seguendo suoni");
+    if (what == 'S') {
+      Serial.println("DEBUGM: Seguendo suoni");
     } else {
-      Serial.println("Seguendo immagini");
+      Serial.println("DEBUGM: Seguendo immagini");
     }
     if (Serial.available() > 0) {
-      if (Serial.readString()=="FN"){
+      if (Serial.readString() == "FN"){
         continueFollowing = false;
-        Serial.println("Interrotto inseguimento");
+        Serial.println("DEBUGM: Interrotto inseguimento");
       } else {
-        Serial.println("Comando non accettato");
-        Serial.println("Provare con FN per interrompere l'inseguimento");
+        Serial.println("DEBUGM: Comando non accettato");
+        Serial.println("DEBUGM: Provare con FN per interrompere l'inseguimento");
       }
     }
     delay(1000);
@@ -83,39 +98,53 @@ void follow(char what){
 
 void moveForX(char movDirection, char movDuration) {
   int remainingMov;
-  if (movDuration == NULL){
-    remainingMov = 1;
-  } else {
-    remainingMov = movDuration-48;  //Da tabella ASCII a int (lol)
-  }
-  String msg = "Avvio movimento verso ";
+  if (movDuration == '\0') { movDuration = '1'; }
+  remainingMov = movDuration-48;  //Da tabella ASCII a int (lol)
+  String msg = "DEBUGM: Avvio movimento verso ";
+  float reqSpeed[] = { 0, 0 };
   switch (movDirection) {
     case 'F':
       msg+="avanti ";
-      advanceBoth();
+      
+      reqSpeed[0] = 1;
+      reqSpeed[1] = 1;
+      advance(reqSpeed);
+      
       break;
     case 'B':
       msg+="indietro ";
-      advanceBoth();
+
+      reqSpeed[0] = -1;
+      reqSpeed[1] = -1;
+      advance(reqSpeed);
+      
       break;
     case 'L':
       msg+="sinistra ";
-      advanceRight();
+
+      reqSpeed[0] = 0;
+      reqSpeed[1] = 1;
+      advance(reqSpeed);
+      
       break;
     case 'R':
       msg+="destra ";
-      advanceLeft();
+
+      reqSpeed[0] = 1;
+      reqSpeed[1] = 0;
+      advance(reqSpeed);
+      
       break;
   }
   msg += "per " + String(remainingMov) + " secondi";
   Serial.println(msg);
-  delay(remainingMov*1000);
+  delay(remainingMov * 1000);
   stopEngines();
-  Serial.println("Movimento terminato");
+  Serial.println("DEBUGM: Movimento terminato");
 }
 
 void rotateForX(char rotDirection, char howMuch){
-  String msg = "Rotazione verso ";
+  String msg = "DEBUGM: Rotazione verso ";
   int forceLeft, forceRight;
   switch(rotDirection) {
     case 'L':
@@ -135,13 +164,8 @@ void rotateForX(char rotDirection, char howMuch){
   Serial.println(msg);
   //Calcolo dei gradi e azionamento cingoli
   delay(3000);
-  Serial.println("Ruotato");
+  Serial.println("DEBUGM: Ruotato");
 }
-
-void advanceLeft(){}  //Azionamento cingolo sx
-void advanceRight(){} //Azionamento cingolo dx
-void advanceBoth(){}  //Azionamento sincronizzato cingoli sx+dx
-void stopEngines(){}  //Stop motori
 
 void serialEvent(){
   //CHIAMATA QUANDO ARDUINO RICEVE DATI SU SERIALE
@@ -151,7 +175,7 @@ void serialEvent(){
     serialStream[2]='\0';
     
     Serial.readString().toCharArray(serialStream, 4);
-    Serial.print("\ncarattere 1:");
+    Serial.print("\nDEBUGM: carattere 1:");
     Serial.print(serialStream[0]);
     Serial.print(" carattere 2:");
     Serial.print(serialStream[1]);
@@ -172,8 +196,6 @@ void serialEvent(){
         break;
       case 'P':
         rotateForX(serialStream[1], serialStream[2]);
-        break;
-      case 'T':
         break;
     }
   }
