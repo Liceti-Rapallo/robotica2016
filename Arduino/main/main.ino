@@ -115,7 +115,27 @@ void moveForX(char movDirection, char movDuration) {
 }
 
 void rotateForX(char rotDirection, char howMuch){
-  
+  String msg = "Rotazione verso ";
+  int forceLeft, forceRight;
+  switch(rotDirection) {
+    case 'L':
+      msg += "sinistra ";
+      forceLeft = -1;
+      forceRight = 1;
+      break;
+    case 'R':
+      msg += "destra ";
+      forceLeft = 1;
+      forceRight = -1;
+      break;    
+  }
+  int angles[] = { 5, 10, 20, 30, 40, 50, 60, 70, 80, 90};
+  float desiredAngle = angles[howMuch - 48];
+  msg += "di " + String(desiredAngle) + " gradi";
+  Serial.println(msg);
+  //Calcolo dei gradi e azionamento cingoli
+  delay(3000);
+  Serial.println("Ruotato");
 }
 
 void advanceLeft(){}  //Azionamento cingolo sx
