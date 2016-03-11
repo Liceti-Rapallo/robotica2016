@@ -22,7 +22,6 @@
  int encoder1PinALast = LOW;
  
  int n = LOW;
- int m = LOW;
  
  int posLidx=-1;
  int posRidx=-1;
@@ -127,37 +126,35 @@ int nextPos(int pos){
 
 void enccount()
 {
-  boolean a=false;
+  boolean encEvent=false;
   n = digitalRead(encoder0PinA);
    if ((encoder0PinALast == LOW) && (n == HIGH)) {
      if (digitalRead(encoder0PinB) == LOW) {
        posL[nextPos(posLidx)]--;
-       encoder0Pos--;
      } else {
        posL[nextPos(posLidx)]++;
-       encoder0Pos++;
      }
-     a=true;
+     encEvent=true;
    } 
    encoder0PinALast = n;
    
    n = digitalRead(encoder1PinA);
    if ((encoder1PinALast == LOW) && (n == HIGH)) {
      if (digitalRead(encoder1PinB) == LOW) {
-       posR[0]--;
+       posR[nextPos(posRidx)]--;
      } else {
-       encoder1Pos++;
+       posR[nextPos(posRidx)]--;
      }
-     a=true;
+     encEvent=true;
    } 
    encoder1PinALast = n;
    
-   if(a)
+   if(encEvent)
    {
    Serial.print ("L: ");
-   Serial.print (encoder0Pos);
+   Serial.print (posL[posLidx]);
    Serial.print ("/ R: ");
-   Serial.print (encoder1Pos);
+   Serial.print (posR[posRidx]);
    Serial.println();
    }
  }
