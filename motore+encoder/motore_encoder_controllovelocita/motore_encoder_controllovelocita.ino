@@ -24,8 +24,8 @@
  int n = LOW;
  int m = LOW;
  
- int posLidx=0;
- int posRidx=0;
+ int posLidx=-1;
+ int posRidx=-1;
  int posL[5];
  int posR[5];
  int speedL[4];
