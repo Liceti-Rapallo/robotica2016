@@ -12,13 +12,13 @@
  int SHIR = A0;
  int val; 
  
- int encoder0PinA = 46;
- int encoder0PinB = 47;
+ #define encoder0PinA = 46;
+ #define encoder0PinB = 47;
  int encoder0PinALast = LOW;
  
  
- int encoder1PinA = 48;
- int encoder1PinB = 49;
+ #define encoder1PinA = 48;
+ #define encoder1PinB = 49;
  int encoder1PinALast = LOW;
  
  int n = LOW;
