@@ -9,16 +9,18 @@
  
 #define SENSIBILITA 200
  
- int SHIR = A0;
- int val; 
+#define SHIR A0
+int val; 
  
- #define encoder0PinA = 46;
- #define encoder0PinB = 47;
+#define encoder0PinA 46
+#define encoder0PinB 47
+
  int encoder0PinALast = LOW;
  
  
- #define encoder1PinA = 48;
- #define encoder1PinB = 49;
+#define encoder1PinA 48
+#define encoder1PinB 49
+
  int encoder1PinALast = LOW;
  
  int n = LOW;
