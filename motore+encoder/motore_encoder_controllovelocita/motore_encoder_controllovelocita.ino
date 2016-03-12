@@ -27,6 +27,17 @@
  int posRidx=-1;
  int posL[5];
  int posR[5];
+ long timeL[5];
+ long timeR[5];
+ /*
+  vel = spazio / tempo
+  
+  speed0  pos1-pos0 / time1-time0
+  speed1  pos2-pos1 / time2-time1
+  speed2  pos3-pos2 / time3-time2
+  speed3  pos4-pos3 / time4-time3
+  
+ */
  int speedL[4];
  int speedR[4];
  
@@ -134,6 +145,7 @@ void enccount()
      } else {
        posL[nextPos(posLidx)]++;
      }
+     timeL[nextPos(posLidx)]=millis();
      encEvent=true;
    } 
    encoder0PinALast = n;
@@ -145,6 +157,7 @@ void enccount()
      } else {
        posR[nextPos(posRidx)]--;
      }
+     timeR[nextPos(posRidx)]=millis();
      encEvent=true;
    } 
    encoder1PinALast = n;
