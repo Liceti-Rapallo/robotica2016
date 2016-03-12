@@ -138,6 +138,7 @@ int nextPos(int pos){
 void enccount()
 {
   boolean encEvent=false;
+  
   n = digitalRead(encoder0PinA);
    if ((encoder0PinALast == LOW) && (n == HIGH)) {
      if (digitalRead(encoder0PinB) == LOW) {
@@ -145,7 +146,11 @@ void enccount()
      } else {
        posL[nextPos(posLidx)]++;
      }
-     timeL[nextPos(posLidx)]=millis();
+     timeL[posLidx]=millis();
+     
+     if (posLidx==0) speedL[posLidx]= (posL[posLidx] - posL[4]) / (timeL[posLidx] - timeL[4]);
+     else speedL[posLidx]= (posL[posLidx] - posL[posLidx-1]) / (timeL[posLidx] - timeL[posLidx-1]);
+     
      encEvent=true;
    } 
    encoder0PinALast = n;
@@ -157,7 +162,11 @@ void enccount()
      } else {
        posR[nextPos(posRidx)]--;
      }
-     timeR[nextPos(posRidx)]=millis();
+     timeR[posRidx]=millis();
+     
+     if (posRidx==0) speedR[posRidx]= (posR[posRidx] - posR[4]) / (timeR[posLidx] - timeR[4]);
+     else speedR[posRidx]= (posR[posRidx] - posR[posRidx-1]) / (timeR[posRidx] - timeR[posRidx-1]);
+     
      encEvent=true;
    } 
    encoder1PinALast = n;
