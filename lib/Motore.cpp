@@ -2,9 +2,6 @@
 
 Motore::Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2)
 {
-    Xindex = 0;
-    Vindex = 0;
-    Aindex = 0;
 
     pENC1Last = LOW;
 
@@ -62,12 +59,15 @@ void Motore::letturaEncoder()
 {
     n = digitalRead(pENC1);
     if ((pENC1Last == LOW) && (n == HIGH)) {
-        int oldPos = x[Xindex];
+        int oldPos = x[0];
+        shiftArray(x);
+        shiftArray(t);
         if (digitalRead(pENC2) == LOW) {
-            x[nextPos(&Xindex, x)] = oldPos - 1;
+            x[0] = oldPos - 1;
         } else {
-            x[nextPos(&Xindex, x)] = oldPos + 1;
+            x[0] = oldPos + 1;
         }
+        t[0]=millis();
     }
     pENC1Last = n;
 }
