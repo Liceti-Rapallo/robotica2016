@@ -16,7 +16,7 @@ class Motore
 public:
 		int x[5];
 		int t[5];
-		
+
 		int v[4];
 		int a[3];
 
@@ -37,7 +37,8 @@ public:
     void letturaEncoder();
 
 private:
-    int nextPos(int pos);
+    int nextPos(int &pos, int a[]);
+		void shiftArray(float &a[]);
 };
 
 #endif //LIB_MOTORE_H

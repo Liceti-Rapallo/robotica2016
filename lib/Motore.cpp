@@ -62,12 +62,16 @@ void Motore::letturaEncoder()
         int oldPos = x[0];
         shiftArray(x);
         shiftArray(t);
+        shiftArray(v);
+        shiftArray(a);
         if (digitalRead(pENC2) == LOW) {
             x[0] = oldPos - 1;
         } else {
             x[0] = oldPos + 1;
         }
-        t[0]=millis();
+        t[0] = millis();
+        v[0] = (x[1]-x[0])/(t[1]-t[0]);
+        a[0] = (v[1]-v[0])/(t[1]-t[0]);
     }
     pENC1Last = n;
 }
