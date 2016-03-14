@@ -1,0 +1,6 @@
+Arduino manda in output i dati nel seguente formato:
+
+[ID]	[ID]	[ID]	[ID]	[ID]	[ID]	[:]	[SPAZIO][DATO...][\n]
+
+D	E	B	U	G	M	:	messaggio di debug per i programmatori, ignorato dal raspberry
+S	E	R	I	A	L	:	velocita' in baud

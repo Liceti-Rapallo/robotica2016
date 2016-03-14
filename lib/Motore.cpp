@@ -2,9 +2,6 @@
 
 Motore::Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2)
 {
-    Xindex = 0;
-    Vindex = 0;
-    Aindex = 0;
 
     pENC1Last = LOW;
 
@@ -55,19 +52,40 @@ void Motore::stop()
 
 void Motore::regola()
 {
-    //TODO: Algoritmo per aggiustare i motori
+  int dim=sizeof(v)/sizeof(float);
+  float speed;
+
+  if(speed!=vel)
+    speed = v[0];
+
+  do{
+    if(vel<speed)
+      vel++;
+    else
+      vel--;
+  }
+  while((speed-vel)==0);
+
+  speed=vel;
 }
 
 void Motore::letturaEncoder()
 {
     n = digitalRead(pENC1);
     if ((pENC1Last == LOW) && (n == HIGH)) {
-        int oldPos = x[Xindex];
+        int oldPos = x[0];
+        shiftArray(x);
+        shiftArray(t);
+        shiftArray(v);
+        shiftArray(a);
         if (digitalRead(pENC2) == LOW) {
-            x[nextPos(&Xindex, x)] = oldPos - 1;
+            x[0] = oldPos - 1;
         } else {
-            x[nextPos(&Xindex, x)] = oldPos + 1;
+            x[0] = oldPos + 1;
         }
+        t[0] = millis();
+        v[0] = (x[1]-x[0])/(t[1]-t[0]);
+        a[0] = (v[1]-v[0])/(t[1]-t[0]);
     }
     pENC1Last = n;
 }
