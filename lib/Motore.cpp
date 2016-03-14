@@ -52,7 +52,21 @@ void Motore::stop()
 
 void Motore::regola()
 {
-    //TODO: Algoritmo per aggiustare i motori
+  int dim=sizeof(v)/sizeof(float);
+  float speed;
+
+  if(speed!=vel)
+    speed = v[0];
+
+  do{
+    if(vel<speed)
+      vel++;
+    else
+      vel--;
+  }
+  while((speed-vel)==0);
+
+  speed=vel;
 }
 
 void Motore::letturaEncoder()
