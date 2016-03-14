@@ -37,9 +37,6 @@ public:
     void stop();
     void regola();
     void letturaEncoder();
-
-private:
-    int nextPos(int pos);
 };
 
 #endif //LIB_MOTORE_H
