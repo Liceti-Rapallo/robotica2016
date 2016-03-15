@@ -35,9 +35,17 @@ public:
     void stop();
     void regola();
     void letturaEncoder();
+<<<<<<< HEAD
+=======
 
 private:
+<<<<<<< HEAD
     int nextPos(int pos);
+=======
+    int nextPos(int &pos, int a[]);
+		void shiftArray(float &a[]);
+>>>>>>> origin/master
+>>>>>>> origin/master
 };
 
 #endif //LIB_MOTORE_H

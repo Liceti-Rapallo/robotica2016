@@ -48,7 +48,7 @@ void loop()
 }
 
 void goAuto(){
-  Serial.println(getHC_SR04Measure_smooth());         // TEST HC-SR04
+  //Serial.println(getHC_SR04Measure_smooth());         // TEST HC-SR04
   //Serial.println(getSHARP2Y0A21F2Ymeasure_smooth());    // TEST SHARP
   //Serial.println(getTDC310temp());                    // TEST TDC310
   //Serial.println(getLight());                         // TEST FOTORESISTENZA

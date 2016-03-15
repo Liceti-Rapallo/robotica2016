@@ -1,0 +1,6 @@
+{
+  "arduino":
+  {
+    "pooling_delay": 500
+  }
+}
