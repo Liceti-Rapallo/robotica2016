@@ -14,31 +14,30 @@
 class Motore
 {
 public:
-		int x[5];
-		int t[5];
+ 	float x[5];
+	float v[4];
+	float a[3];
 
-		int v[4];
-		int a[3];
+  int pIN1;
+  int pIN2;
+	int pPWM;
+  int pENC1;
+  int pENC2;
 
-    int pIN1;
-    int pIN2;
-		int pPWM;
-    int pENC1;
-    int pENC2;
+  int pot;
 
-    int pENC1Last;
+  int pENC1Last;
 
-		Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2);
+	Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2);
 
     void loop();
-    void muovi(int vel);
+    void muovi(int pot);
     void stop();
     void regola();
     void letturaEncoder();
 
 private:
-    int nextPos(int &pos, int a[]);
-		void shiftArray(float &a[]);
+    int nextPos(int pos);
 };
 
 #endif //LIB_MOTORE_H

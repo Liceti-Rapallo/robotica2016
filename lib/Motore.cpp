@@ -23,14 +23,14 @@ void Motore::loop()
 }
 
 //vel = velocita'(positiva = avanti, negativa = indietro, 0 = stop)
-void Motore::muovi(int vel)
+void Motore::muovi(int pot)
 {
-    if(vel == 0)
+    if(pot == 0)
     {
         digitalWrite(pIN1, LOW);
         digitalWrite(pIN2, LOW);
     }
-    if(vel > 0)
+    if(pot > 0)
     {
         digitalWrite(pIN1, HIGH);
         digitalWrite(pIN2, LOW);
@@ -41,7 +41,7 @@ void Motore::muovi(int vel)
         digitalWrite(pIN2, HIGH);
     }
 
-    analogWrite(pPWM, vel);
+    analogWrite(pPWM, pot);
 }
 
 //Arresta i motori
@@ -55,18 +55,18 @@ void Motore::regola()
   int dim=sizeof(v)/sizeof(float);
   float speed;
 
-  if(speed!=vel)
+  if(speed!=pot)
     speed = v[0];
 
   do{
-    if(vel<speed)
-      vel++;
+    if(pot<speed)
+      pot++;
     else
-      vel--;
+      pot--;
   }
-  while((speed-vel)==0);
+  while((speed-pot)==0);
 
-  speed=vel;
+  speed=pot;
 }
 
 void Motore::letturaEncoder()
