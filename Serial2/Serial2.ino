@@ -26,7 +26,7 @@ void setup() {
   sensorVal[Y]=0;
   
   
-  Serial.begin(57600);
+  Serial.begin(9600);
 
   pinMode(sensorPin[INFRAROSSI], INPUT);
 }
@@ -46,7 +46,12 @@ void measure(){
 void loop() {
   // put your main code here, to run repeatedly:
   measure();
-  delay(10);
+ /* Serial.print("ciao minno ");
+  Serial.print(sensorVal[INFRAROSSI]);
+  Serial.println();
+  */
+  
+  delay(100);
 }
 
 void setCommand(){
