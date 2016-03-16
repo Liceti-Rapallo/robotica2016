@@ -1,9 +1,9 @@
 #readfrompi.py
 import serial as s
 import time
-ser = s.Serial("/dev/ttyACM0", 57600)
+ser = s.Serial("COM4", 9600)
 time.sleep(1)
-ser.setDTR(level=0)
+ser.setDTR(False)
 time.sleep(1)
 print ser.write("D")
 print ser.readline()
