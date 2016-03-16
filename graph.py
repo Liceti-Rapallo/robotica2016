@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib.mlab as mlab
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import random
 import time
 import threading
@@ -24,7 +27,7 @@ def reDraw():
         fakeMeasure()
         x=[]
         y=[]
-        z=[]
+        v=[]
         for item in coords:
             x.append(float(item.x))
             y.append(float(item.y))
@@ -32,7 +35,7 @@ def reDraw():
         plt.axis([0, 10, 0, 10])
         plt.hexbin(x, y, v, cmap=plt.get_cmap('Greys'), gridsize=50)
         plt.draw()
-        time.sleep(0.1)
+        time.sleep(0.5)
 
 
 plt.title("Esp. Boh. Ino")
