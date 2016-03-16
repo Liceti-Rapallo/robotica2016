@@ -12,11 +12,7 @@ import globals as g
 
 g.cfg = json.loads(open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.json")).read())
 
-g.ser = serial.Serial("COM4", 9600)
-
-time.sleep(1)
-g.ser.setDTR(False)
-time.sleep(1)
+g.ser = serial.Serial("COM1 Perche' a noi piace Windows", 9600)
 
 x = y = NP.linspace(-5, 5, 50)
 X, Y = NP.meshgrid(x, y)
@@ -27,10 +23,9 @@ x = X.ravel()
 y = Y.ravel()
 z = ZD.ravel()
 print z
-x = []
-y = []
-z = []
-
+# x = []
+# y = []
+# z = []
 vals = []
 gridsize = 30
 PLT.title("Temperatura Ex.Boh.Ino")
@@ -38,30 +33,12 @@ PLT.subplot(111)
 
 import random
 
-def ping(text):
-    g.ser.write(text)
-
-    return g.ser.readall()
-
-
-def send(text):
-    g.ser.write(text)
 
 def loop():
     global z
-    g.ser.write("D")
-    g.ser.readline()
-    g.ser.readline()
-    send("SAAA");
-    for i in range(5):
-        g.ser.write("G")
-        out = g.ser.readline().split(":")
-
-        x.append(out[0])
-        y.append(out[1])
-        z.append(out[2])
-        print i
-
+    # while True:
+    # send("s" + str(0b1100))
+    # out = ping("g").split("-")
     # for X in range(50):
     # vals.append([])
     # for Y in range(50):
@@ -72,10 +49,6 @@ def loop():
 
 
 loop()
-
-x = NP.array(x).astype(NP.float)
-y = NP.array(y).astype(NP.float)
-z = NP.array(z).astype(NP.float)
 
 print "ciao"
 print z
@@ -89,5 +62,14 @@ PLT.show()
 
 print os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.json")
 
+
+def ping(text):
+    g.ser.write(text)
+
+    return g.ser.readall()
+
+
+def send(text):
+    g.ser.write(text)
 
 # threading.Thread(target=loop).start()

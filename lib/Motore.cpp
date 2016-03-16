@@ -15,19 +15,16 @@ Motore::Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2)
 //Eseguire qui i controlli periodici
 void Motore::loop()
 {
-    if(pot != 0)//Non regola i mototi se e' formo
+    if(vel != 0)//Non regola i mototi se e' formo
     {
-
-        //letturaEncoder();
-        //regola();
-
+        letturaEncoder();
+        regola();
     }
 }
 
 //vel = velocita'(positiva = avanti, negativa = indietro, 0 = stop)
 void Motore::muovi(int pot)
 {
-    this->pot = pot;
     if(pot == 0)
     {
         digitalWrite(pIN1, LOW);
@@ -44,7 +41,7 @@ void Motore::muovi(int pot)
         digitalWrite(pIN2, HIGH);
     }
 
-    analogWrite(pPWM, pot+corr);
+    analogWrite(pPWM, pot);
 }
 
 //Arresta i motori
@@ -56,35 +53,20 @@ void Motore::stop()
 void Motore::regola()
 {
   int dim=sizeof(v)/sizeof(float);
-  int pot/*=pow(vel,2)*/;
-  float speed;//velocità registrata
-  float err,erri;/*err=errore d'elaborazione
-                   erri=errore iniziale*/
-  float kp,ki;//kp=costante effetto proporzionale
-              //ki=costante effetto integrale
+  float speed;
 
-  if(speed!=vel)
+  if(speed!=pot)
     speed = v[0];
-  erri= vel-speed;
-
-  if(vel<speed)
-    vel++;
-  else
-    vel--;
-
-  err=((kp*vel)+(ki*vel*erri))-speed;
 
   do{
-    if(vel<speed)
+    if(pot<speed)
       pot++;
     else
       pot--;
-
-    err=((kp*vel)+(ki*vel*err))-speed;
   }
-  while(err==0);
+  while((speed-pot)==0);
 
-  speed=vel;
+  speed=pot;
 }
 
 void Motore::letturaEncoder()

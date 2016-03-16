@@ -26,8 +26,6 @@ public:
 
   int pot;
 
-  int corr;
-
   int pENC1Last;
 
 	Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2);
