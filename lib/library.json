@@ -1,7 +1,7 @@
 {
-    "name": "Thread",
-    "keywords": "thread, task",
-    "description": "A library for managing the periodic execution of multiple tasks",
+    "name": "ExBohIno",
+    "keywords": "control, rover 5, manager",
+    "description": "The software that manage ExBohIno",
     "repository":
     {
         "type": "git",
