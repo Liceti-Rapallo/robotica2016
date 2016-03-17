@@ -113,7 +113,6 @@ void measure(){
     Serial.print(" IR SOTTO: ");
     Serial.print(sensorVal[INFRAROSS2]);
     Serial.println();
-    delay(250);
   }
   //head_sweep();
 }
