@@ -14,11 +14,11 @@
 class Motori
 {
 public:
-    Motore dx, sx;
+    Motore *dx, *sx;
     int pos;//Posizione attuale
     int stoppos;//Positione dove fermarsi
 
-    Motori(Motore dx, Motore sx);
+    Motori(Motore* dx, Motore* sx);
 
     void loop();
     void avanti(int vel, int space);

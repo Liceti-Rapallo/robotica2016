@@ -2,7 +2,6 @@
 
 Motore::Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2)
 {
-
     pENC1Last = LOW;
 
     this->pIN1 = pIN1;
@@ -15,7 +14,7 @@ Motore::Motore(int pIN1, int pIN2, int pPWM, int pENC1, int pENC2)
 //Eseguire qui i controlli periodici
 void Motore::loop()
 {
-    if(vel != 0)//Non regola i mototi se e' formo
+    if(pot != 0)//Non regola i mototi se e' formo
     {
         letturaEncoder();
         regola();
@@ -25,6 +24,7 @@ void Motore::loop()
 //vel = velocita'(positiva = avanti, negativa = indietro, 0 = stop)
 void Motore::muovi(int pot)
 {
+    this->pot = pot;
     if(pot == 0)
     {
         digitalWrite(pIN1, LOW);
@@ -41,7 +41,7 @@ void Motore::muovi(int pot)
         digitalWrite(pIN2, HIGH);
     }
 
-    analogWrite(pPWM, pot);
+    analogWrite(pPWM, pot+corr);
 }
 
 //Arresta i motori
@@ -52,26 +52,12 @@ void Motore::stop()
 
 void Motore::regola()
 {
-  int dim=sizeof(v)/sizeof(float);
-  float speed;
 
-  if(speed!=pot)
-    speed = v[0];
-
-  do{
-    if(pot<speed)
-      pot++;
-    else
-      pot--;
-  }
-  while((speed-pot)==0);
-
-  speed=pot;
 }
 
 void Motore::letturaEncoder()
 {
-    n = digitalRead(pENC1);
+    bool n = digitalRead(pENC1);
     if ((pENC1Last == LOW) && (n == HIGH)) {
         int oldPos = x[0];
         shiftArray(x);

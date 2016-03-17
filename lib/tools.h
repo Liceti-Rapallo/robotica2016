@@ -6,5 +6,6 @@
 #define LIB_TOOLS_H
 
 extern int netxPos(int &pos, int a[]);
+extern void shiftArray(float *a);
 
 #endif //LIB_TOOLS_H

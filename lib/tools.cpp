@@ -5,7 +5,7 @@ int nextPos(int &pos, int a[])
     else return pos;
 }
 
-void shiftArray(float &a[])
+void shiftArray(float *a)
 {
     for(int i = sizeof(a)/sizeof(float)-2; i >= 0; i--)
         a[i+1] = a[i];

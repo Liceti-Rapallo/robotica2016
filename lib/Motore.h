@@ -18,6 +18,8 @@ public:
 	float v[4];
 	float a[3];
 
+  float t[5];
+
   int pIN1;
   int pIN2;
 	int pPWM;
@@ -25,6 +27,7 @@ public:
   int pENC2;
 
   int pot;
+  int corr;
 
   int pENC1Last;
 

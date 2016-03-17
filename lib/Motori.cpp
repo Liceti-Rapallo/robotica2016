@@ -1,6 +1,6 @@
 #include "Motori.h"
 
-Motori::Motori(Motore dx, Motore sx)
+Motori::Motori(Motore* dx, Motore* sx)
 {
     this->dx = dx;
     this->sx = sx;
@@ -20,7 +20,7 @@ void Motori::loop()
 }
 
 //vel = velocita', space = spazio in cm(-1 = infinito)
-void Motori::avanti(int vel, int space)
+void Motori::avanti(int vel, int space = -1)
 {
     muovi(vel, space);
 }
@@ -39,8 +39,8 @@ void Motori::muovi(int vel, int space)
     else
         stoppos = pos + space;
 
-    dx->mouvi(vel);
-    sx->mouvi(vel);
+    dx->muovi(vel);
+    sx->muovi(vel);
 }
 
 //Arresta i motori
