@@ -1,3 +1,7 @@
+#include <Motore.h>
+#include <Motori.h>
+#include <tools.h>
+
 #include <Servo.h>
 
 boolean debug=true;
@@ -9,11 +13,17 @@ boolean flags[24];
 #define HC_MaxRange 350
 #define HC_MinRange 5
 
-#define SERVO 9
+Motore* dx = new Motore(52,53,3,49,48);
+Motore* sx = new Motore(50,51,10,46,47);
+Motori* m = new Motori(dx, sx);
+#define enginePower 100
+
+#define SERVO 7
 #define INFRAROSSI 11
 #define INFRAROSS2 12
 
-#define IR_SENSIBILITA 500
+#define IR_SENSIBILITA 550
+#define IR_SENSIBILITA2 700
 
 float sensorVal[24];
 unsigned int sensorName[24];
@@ -25,10 +35,13 @@ int mes[360];
 
 void setup() {
   // put your setup code here, to run once:
+  pinMode(45, OUTPUT);
+  digitalWrite(45, HIGH);
+  
   sensorPin[INFRAROSSI]=A0;
   sensorName[INFRAROSSI]=INFRAROSSI;
 
-  sensorPin[INFRAROSS2]=A1;
+  sensorPin[INFRAROSS2]=A5;
   sensorName[INFRAROSS2]=INFRAROSS2;
   
   
@@ -38,9 +51,12 @@ void setup() {
   pinMode(HC_SR04_ECHO, INPUT);
 
   servo_testa.attach(SERVO);
-  servo_testa.write(0);
+  servo_testa.write(90);
 
   pinMode(sensorPin[INFRAROSSI], INPUT);
+
+  dx->corr = 10;
+  sx->corr = 10;
 }
 
 int getHC_SR04Measure() {
@@ -69,7 +85,8 @@ int getHC_SR04Measure() {
 void head_sweep(){
   for (int i=0; i <= 360; i+=10){              
     servo_testa.write(abs(180-i));
-    cm = getHC_SR04Measure();
+    delay(15);
+    //cm = getHC_SR04Measure();
   }
 }
 
@@ -90,18 +107,35 @@ void head_sweep_panic(){
 void measure(){
   sensorVal[INFRAROSSI] = analogRead(sensorPin[INFRAROSSI]);
   sensorVal[INFRAROSS2] = analogRead(sensorPin[INFRAROSS2]);
+  if (debug){
+    Serial.print("IR SOPRA: ");
+    Serial.print(sensorVal[INFRAROSSI]);
+    Serial.print(" IR SOTTO: ");
+    Serial.print(sensorVal[INFRAROSS2]);
+    Serial.println();
+    delay(250);
+  }
+  //head_sweep();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   measure();
-  if (sensorVal[INFRAROSSI] > IR_SENSIBILITA || sensorVal[INFRAROSS2] > IR_SENSIBILITA){
+  if (sensorVal[INFRAROSSI] > IR_SENSIBILITA || sensorVal[INFRAROSS2] > IR_SENSIBILITA2 ){
+    //head_sweep_panic();
+    
+    m->indietro(enginePower, -1);
+    delay(750);
+    m->stop();
+    dx->muovi(enginePower);
+    sx->muovi(-enginePower);
+    delay(1500);
+    m->stop();
     //indietro
     //gira
   } else {
-    //avanti
+    m->avanti(enginePower*2.00, -1);
   }
-  delay(100);
 }
 
 void setCommand(){

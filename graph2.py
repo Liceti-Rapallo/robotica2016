@@ -21,8 +21,8 @@ for r in range(0,255):
         psf[r,c] = math.exp(-((r-127)**2+(c-127)**2))
         print("X: "+ str(r) +" Y: "+ str(c) +" V: "+str(psf[r,c]))
         #time.sleep(1)
-print psf[128,128]
-    
+# print (psf[128,128])
+
 def reDraw():
     while True:
         measurement()

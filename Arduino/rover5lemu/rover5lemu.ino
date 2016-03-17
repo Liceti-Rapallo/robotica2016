@@ -7,7 +7,8 @@
 Motori* m = new Motori(dx, sx);;
 
 void setup(){
-
+  pinMode(45, OUTPUT);
+  digitalWrite(45, HIGH);
   dx->corr = 10;
   sx->corr = 10;
 
