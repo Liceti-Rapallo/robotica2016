@@ -13,18 +13,17 @@ Motore	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-runned	KEYWORD2
-setInterval	KEYWORD2
-shouldRun	KEYWORD2
-onRun	KEYWORD2
-run	KEYWORD2
-
-# Specific of ThreadController
-add	KEYWORD2
-remove	KEYWORD2
-clear	KEYWORD2
-size	KEYWORD2
-get	KEYWORD2
+stop  KEYWORD2
+avanti  KEYWORD2
+indietro  KEYWORD2
+muovi	KEYWORD2
+attiva  KEYWORD2
+disattiva KEYWORD2
+dx  KEYWORD2
+sx  KEYWORD2
+stby  KEYWORD2
+pos KEYWORD2
+stopos  KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

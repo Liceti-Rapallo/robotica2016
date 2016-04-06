@@ -15,16 +15,19 @@ class Motori
 {
 public:
     Motore *dx, *sx;
-    int pos;//Posizione attuale
-    int stoppos;//Positione dove fermarsi
+    int stby; //Il pin stby
+    int pos; //Posizione attuale
+    int stoppos; //Positione dove fermarsi
 
-    Motori(Motore* dx, Motore* sx);
+    Motori(Motore* dx, Motore* sx, int stby);
 
     void loop();
     void avanti(int vel, int space);
     void indietro(int vel, int space);
     void muovi(int vel, int space);
     void stop();
+    void attiva();
+    void disattiva();
 };
 
 #endif //LIB_MOTORI_H
