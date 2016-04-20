@@ -203,3 +203,50 @@ void serialEvent(){
     }
   }
 }
+
+unsigned long ultimoTempo;			//Serve per calcolare il DeltaT
+double inPID, outPID, targetPID;	//Valore da correggere, valore da applicare, obiettivo
+double sommaErr, ultimoErr;			//Errore accumulato, ultimo errore registrato
+double kP, kI, kD;					//Intervento proporzionale, integrale, derivativo
+int campionamento = 1000; 			//Ogni quanto svolgere il calcolo in millisecondi
+
+void calcolaPid()
+{
+	//Questa funzione salva in outPID il risultato del controllo PID per il setpoint targetPID di inPID
+	unsigned long adesso = millis();			//Seleziona adesso
+	int deltaTempo = (adesso - ultimoTempo);	//Fa la differenza tra campionamenti successivi
+	if(deltaTempo >= campionamento)		//Controlla se calcolare l'errore o no in base al sampling rate scelto
+	{
+		//Calcolo variabili di lavoro per il PID
+		double errore = targetPID - inPID;		//calcolo errore sul valore istantaneo
+		sommaErr += errore;						//calcolo errore accumulato
+		double deltaErr = (errore - ultimoErr);	//calcolo errore 
+		//Calcolo del PID
+		outPID = kP * errore + kI * sommaErr + kD * deltaErr;	//Calcolo PID
+		//Salvataggio per il prossimo calcolo
+		ultimoErr = errore;
+		ultimoTempo = adesso;
+	}
+}
+ 
+void impostaCostanti(double nuovokP, double nuovokI, double nuovokD)
+{
+	//Se chiamata permette di cambiare le costanti kP, kI e kD senza reinizializzare il PID
+	double campionamentoInSecondi = ((double)campionamento) / 1000;	//Conversione easy
+	kP = nuovokP;							//L'intervento proporzionale resta invariato rispetto al tempo
+	kI = nuovokI * campionamentoInSecondi;	//L'intervento integrale dipende direttamente dai secondi
+	kD = nuovokD / campionamentoInSecondi;	//L'intervento derivativo dipende inversamente dai secondi
+}
+ 
+void nuovoSampling(int nuovoSamplingRate)
+{
+	//Assegna un nuovo sampling rate al PID senza reinizializzarlo
+	if (nuovoSamplingRate > 0)
+	{
+		double rapporto  = (double)nuovoSamplingRate / (double)campionamento;
+		
+		kI *= rapporto;
+		kD /= rapporto;
+		campionamento = (unsigned long)nuovoSamplingRate;
+	}
+}
