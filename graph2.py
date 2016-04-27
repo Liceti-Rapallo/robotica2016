@@ -28,11 +28,15 @@ coords = np.empty([256, 256])
 coords=np.zeros([256, 256])
 psf = np.empty([256, 256])
 psf = np.zeros([256, 256])
+'''
 for r in range(0,255):
     for c in range(0,255):
         psf[r,c] = 255*math.exp( ( -((r-127)**2+(c-127)**2) / 20 ))
         #if ((r > 120 and r < 130)and(c > 120 and c < 130)):
         #    print("X: "+ str(r) +" Y: "+ str(c) +" V: "+str(psf[r,c]))
+
+
+'''
 '''
 for r in range(0,255):
     for c in range(0,255):
@@ -42,12 +46,12 @@ plt.title("Esp. Boh. Ino")
 coords=psf
 shim=plt.imshow(psf, cmap="afmhot")
 
-for i in range (120,140):
-    coords[i,i]=256
+for i in range (0,5):
+    psf[127,127+i]=256
 
 i=0
 while i < 10:
-    #measurement()
+    measurement()
     shim.set_data(psf)
     plt.draw()
     i+=1
@@ -58,9 +62,18 @@ f_insieme=f_psf*f_coords
 insieme=np.fft.ifft2(f_insieme)
 blah=np.empty([256, 256])
 blah=np.zeros([256, 256])
-for r in range(0,255):
-    for c in range(0,255):
-        blah[r,c] = insieme.real[abs(r-127),abs(c-127)]
+for r in range(0,127):
+    for c in range(0,127):
+        blah[r+127,c+127] = insieme.real[r,c]
+for r in range(128,255):
+    for c in range(128,255):
+        blah[r-127,c-127] = insieme.real[r,c]
+for r in range(0,127):
+    for c in range(128,255):
+        blah[r+127,c-127] = insieme.real[r,c]
+for r in range(128,255):
+    for c in range(0,127):
+        blah[r-127,c+127] = insieme.real[r,c]
 
 plt.imshow(blah, cmap="afmhot")
 plt.show()
