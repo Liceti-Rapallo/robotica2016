@@ -19,7 +19,7 @@ def measurement():
 def reDraw():
     while True:
         measurement()
-        plt.imshow(coords, cmap="hot")
+        plt.imshow(psf, cmap="hot")
         plt.show()
         time.sleep(0.2)
 
@@ -27,21 +27,27 @@ def reDraw():
 coords = np.empty([256, 256])
 coords=np.zeros([256, 256])
 psf = np.empty([256, 256])
+psf = np.zeros([256, 256])
 for r in range(0,255):
     for c in range(0,255):
-#        psf[r,c] = math.exp(-((r-127)^2)/2)
-        psf[r,c] = math.exp(-((r-127)**2+(c-127)**2))
-        #print("X: "+ str(r) +" Y: "+ str(c) +" V: "+str(psf[r,c]))
-        #time.sleep(1)
+        #psf[r,c] = math.exp(-((r-127)^2)/2)
+        psf[r,c] = 255*math.exp( ( -((r-127)**2+(c-127)**2) / 10 ))
+        if ((r > 120 and r < 130)and(c > 120 and c < 130)):
+            print("X: "+ str(r) +" Y: "+ str(c) +" V: "+str(psf[r,c]))
+'''
+for r in range(0,255):
+    for c in range(0,255):
+        psf[r,c]= abs(127.5-c) + abs(127.5-r)
+'''
 # print (psf[128,128])
 plt.title("Esp. Boh. Ino")
 coords=psf
-shim=plt.imshow(coords, cmap="hot")
+shim=plt.imshow(psf, cmap="afmhot")
 
 i=0
-while i < 30:
+while i < 50:
     measurement()
-    shim.set_data(coords)
+    shim.set_data(psf)
     plt.draw()
     #time.sleep(0.1)
     i+=1
@@ -50,7 +56,7 @@ f_psf=np.fft.fft2(psf)
 f_insieme=f_psf*f_coords
 insieme=np.fft.ifft2(f_insieme)
 
-plt.imshow(insieme.real, cmap="hot")
+plt.imshow(psf, cmap="afmhot")
 plt.show()
 
 
